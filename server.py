@@ -9,6 +9,7 @@ SERVER = "10.50.100.248"
 #SERVER = socket.gethostbyname(socket.gethostname())
 ADDR = (SERVER, PORT)
 FORMAT = 'utf-8'
+DISCONNECT_MESSAGE = "DISCONNECT"
 
 
 
@@ -20,7 +21,17 @@ def handle_client(conn, addr):
 
     connected = True
     while connected:
-       msg_length = conn.recv(HEADER).decode()
+        msg_length = conn.recv(HEADER).decode()
+        msg_length = int(msg_length)
+        msg = conn.recv(msg_length).decode(FORMAT)
+        if msg == DISCONNECT_MESSAGE:
+            connected = False
+            #Or BREAK
+    
+
+        print(f"[{addr}] {msg}")
+        
+    conn.close()
 
 
 def start():
@@ -30,6 +41,7 @@ def start():
         thread = threading.Thread(target= handle_client, args=(conn, addr))
         thread.start()
         print(f"[ACTIVE CONNECTIONS] {threading.active_count() - 1}")
+    
 
 print("[STARTING] server is starting")
 start()
