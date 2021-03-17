@@ -1,7 +1,13 @@
 import socket
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect((socket.gethostname(), 1234))
+HEADER = 64 # Video
 
-msg = s.recv(1024)
-print(msg.decode("utf-8"))
+PORT = 65432        # No cambiar
+FORMAT = 'utf-8' # Video
+DISCONNECT_MESSAGE = "DISCONNECT"
+SERVER = socket.gethostbyname(socket.gethostname())
+ADDR = (SERVER, PORT)
+
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client.connect(ADDR)
+
