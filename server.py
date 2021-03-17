@@ -27,7 +27,6 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             if not data:
                 break
             conn.sendall(data)
-'''
 
 def handle_client(conn, addr): #Deal with clients
     print(f"[NEW CONNECTION] {addr} connected")
@@ -44,6 +43,7 @@ def handle_client(conn, addr): #Deal with clients
         print(f"[{addr}] {msg}")
 
     conn.close()
+'''
 
 def start(): # Server starts Running
     server.listen(2)
@@ -51,6 +51,7 @@ def start(): # Server starts Running
     while True:
         conn, addr = server.accept() #Connection with the clients
         print("Got connection from", addr)
+        print(conn.recv(1024)) #print message from client
         #conn.send('Thank you for connecting') NOT WORKING
         conn.close() #Connection close
 
